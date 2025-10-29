@@ -167,3 +167,20 @@ That’s dependency inversion in real life.
 ### Key Takeaway
 -   High-level code should rely on **interfaces or abstractions**, not concrete implementations.
 -   This allows for **easy swapping**, **testing**, and **future-proofing**.
+
+### Summary Table
+
+| Principle | What It Means | Real-World Analogy |
+|--|--|--|
+| **Liskov Substitution** | Subclasses should behave like their base classes | A boat pretending to be a car |
+| **Interface Segregation** | Don’t force classes to implement unused methods | Toaster shouldn’t need blender controls |
+| **Dependency Inversion** | Depend on abstractions, not details | Power outlet that supports any device |
+
+These principles are not just theoretical — they are **practical tools** to make your software modular, adaptable, and robust.
+
+When you apply:
+-   **LSP**, your inheritance hierarchy behaves correctly.
+-   **ISP**, your interfaces are clean and relevant.
+-   **DIP**, your system becomes loosely coupled and easier to maintain.
+
+In short, they’re the backbone of **object-oriented design done right.**
