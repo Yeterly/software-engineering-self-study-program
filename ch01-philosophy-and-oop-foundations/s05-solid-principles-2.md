@@ -104,3 +104,66 @@ Each device should have its **own interface**.
 ### Key Takeaway
 -   Create **multiple small, specific** interfaces rather than one large, general one.
 -   Each class should depend **only on what it uses.**
+
+## Dependency Inversion Principle (DIP)
+
+### Definition
+> High-level modules should not depend on low-level modules. Both should depend on abstractions.  
+Abstractions should not depend on details; details should depend on abstractions.
+
+### Bad Example
+~~~python
+class MySQLDatabase:
+    def connect(self):
+        print("Connecting to MySQL...")
+
+class DataHandler:
+    def __init__(self):
+        self.db = MySQLDatabase()  # tightly coupled to MySQL
+
+    def read_data(self):
+        self.db.connect()
+        print("Reading data from MySQL...")
+~~~
+Here, `DataHandler` is **tightly coupled** to `MySQLDatabase`.  
+If we later want to switch to `PostgreSQL`, we’d have to modify the `DataHandler` class — violating DIP.
+
+### Good Example
+~~~python
+class Database:
+    def connect(self): pass
+
+class MySQLDatabase(Database):
+    def connect(self):
+        print("Connecting to MySQL...")
+
+class PostgreSQLDatabase(Database):
+    def connect(self):
+        print("Connecting to PostgreSQL...")
+
+class DataHandler:
+    def __init__(self, db: Database):
+        self.db = db  # depends on abstraction, not implementation
+
+    def read_data(self):
+        self.db.connect()
+        print("Reading data from the database...")
+
+# Usage
+mysql = MySQLDatabase()
+handler = DataHandler(mysql)
+handler.read_data()
+~~~
+Now, the high-level `DataHandler` doesn’t care which database is used.  
+It only depends on the **abstract** `Database` interface.
+
+### Real-World Analogy
+Think of a **power outlet** and **devices**.  
+The outlet provides a standard interface (socket shape, voltage).  
+You can plug in any device — a lamp, charger, or TV — as long as it matches the interface.  
+The outlet doesn’t depend on any specific appliance.  
+That’s dependency inversion in real life.
+
+### Key Takeaway
+-   High-level code should rely on **interfaces or abstractions**, not concrete implementations.
+-   This allows for **easy swapping**, **testing**, and **future-proofing**.
